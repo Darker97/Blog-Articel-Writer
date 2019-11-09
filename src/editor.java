@@ -91,7 +91,7 @@ public class editor {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String NameOfTheFile = Input("Name of the Picture");
-			    String temp = "<img src=\"" + NameOfTheFile + "\">";
+			    String temp = "<br> <img src=\"../BLOG/img/" + NameOfTheFile + "\">";
 			    editorPane.setText(editorPane.getText() + "\n" + temp);
 			}
 		});
@@ -193,7 +193,7 @@ public class editor {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
 		String Date =  dateFormat.format(date);
 		
-		String Name = txtName.getText() + "--->" + Date;
+		String Name = txtName.getText() + "---" + Date;
 		
 		File file = new File (dir, Name);
 
@@ -218,7 +218,7 @@ public class editor {
 			BufferedWriter out2 = new BufferedWriter(new FileWriter(file2, true)); 
 		    PrintWriter print = new PrintWriter(out2);
 		    
-		    print.write(Name + "\n");
+		    print.write("\n" + Name);
 		    print.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
