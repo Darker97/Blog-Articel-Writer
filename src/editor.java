@@ -10,11 +10,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,7 +27,8 @@ import java.awt.event.ActionEvent;
 public class editor {
 
 	private static JFrame frame;
-	private JTextField txtName;
+	private static JTextField txtName;
+	private static JEditorPane editorPane;
 
 	/**
 	 * Launch the application.
@@ -66,7 +72,7 @@ public class editor {
 		JScrollPane scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		JEditorPane editorPane = new JEditorPane();
+		editorPane = new JEditorPane();
 		scrollPane.setViewportView(editorPane);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -79,7 +85,7 @@ public class editor {
 		JMenuItem mntmNewMenuItem = new JMenuItem("Bilder");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String NameOfTheFile = getFileName();
+				String NameOfTheFile = Input("Name of the Picture");
 			    String temp = "<img src=\"" + NameOfTheFile + "\">";
 			    editorPane.setText(editorPane.getText() + "\n" + temp);
 			}
@@ -101,7 +107,7 @@ public class editor {
 		JMenuItem mntmVideo = new JMenuItem("Video");
 		mntmVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String VideoTitel = getFileName();
+				String VideoTitel = Input("Video Name");
 			    String temp = "<source src=\"./ExtraMedia/Video/" + VideoTitel + "\" type=\"video/mp4\">";
 			    editorPane.setText(editorPane.getText() + "\n" + temp);
 			}
@@ -168,16 +174,31 @@ public class editor {
 	}
 	
 	private static void open() {
+		JFileChooser j = new JFileChooser();
+		j.showOpenDialog(frame);
 		
 	}
 	
 	private static void save() {
 		System.out.println("Save");
-		
+		File dir = new File("BLOG");
+		dir.mkdirs();
+		File file = new File (dir, txtName.getText());
+
+		 try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(file + ".html")); 
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			out.write(editorPane.getText());
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static String getFileName() {
-		
 		return null;
 	}
 	
