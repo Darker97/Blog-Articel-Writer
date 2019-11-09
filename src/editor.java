@@ -91,7 +91,7 @@ public class editor {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String NameOfTheFile = Input("Name of the Picture");
-			    String temp = "<br> <img src=\"../BLOG/img/" + NameOfTheFile + "\">";
+			    String temp = "<br> <img src=\"./BLOG/img/" + NameOfTheFile + "\">";
 			    editorPane.setText(editorPane.getText() + "\n" + temp);
 			}
 		});
