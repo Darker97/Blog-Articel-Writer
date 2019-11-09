@@ -20,6 +20,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.InputEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -183,15 +188,38 @@ public class editor {
 		System.out.println("Save");
 		File dir = new File("BLOG");
 		dir.mkdirs();
-		File file = new File (dir, txtName.getText());
+		
+		Date date = Calendar.getInstance().getTime();  
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");  
+		String Date =  dateFormat.format(date);
+		
+		String Name = txtName.getText() + "--->" + Date;
+		
+		File file = new File (dir, Name);
 
 		 try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(file + ".html")); 
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			out.write(editorPane.getText());
-			out.close();
+			BufferedWriter out = new BufferedWriter(new FileWriter(file + ".html", true)); 
+			PrintWriter print1 = new PrintWriter(out);
+			
+			print1.write(editorPane.getText());
+			print1.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		// --------------------------------
+		// Adding the file to the JSON-Info
+		File dir2 = new File("JSON");
+		dir2.mkdirs();
+		File file2 = new File (dir2, "blog.txt");
+
+		 try {
+			BufferedWriter out2 = new BufferedWriter(new FileWriter(file2, true)); 
+		    PrintWriter print = new PrintWriter(out2);
+		    
+		    print.write(Name + "\n");
+		    print.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
